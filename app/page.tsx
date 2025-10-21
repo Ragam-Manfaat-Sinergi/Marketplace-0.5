@@ -11,6 +11,7 @@ import { getProducts, Product } from "@/lib/api";
  * - Background putih bersih
  * - Produk terbaru dari API
  * - Desain elegan & transparan
+ * - Kategori diambil dari backend (otomatis)
  */
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -62,7 +63,9 @@ export default function HomePage() {
           </div>
 
           {loading ? (
-            <p className="text-gray-500 text-center py-6">⏳ Memuat produk...</p>
+            <p className="text-gray-500 text-center py-6">
+              ⏳ Memuat produk...
+            </p>
           ) : products.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
               {products.map((product) => (
@@ -95,6 +98,7 @@ function ProductCard({ product }: { product: Product }) {
       href={`/produk/${product.id}`}
       className="group block rounded-xl p-3 bg-white/70 backdrop-blur-md border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all"
     >
+      {/* 🖼️ Gambar Produk */}
       <div className="relative w-full aspect-square overflow-hidden rounded-lg bg-white/80">
         <img
           src={imageUrl}
@@ -103,6 +107,7 @@ function ProductCard({ product }: { product: Product }) {
         />
       </div>
 
+      {/* 🏷️ Detail Produk */}
       <div className="mt-3 space-y-1">
         <h3 className="text-sm font-medium text-gray-800 group-hover:text-green-600 line-clamp-2">
           {product.name}

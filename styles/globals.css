@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 🎨 Variabel warna tema */
+/* 🌈 Variabel warna tema */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -15,28 +15,77 @@
   }
 }
 
-/* 💅 Style Global */
+/* 💅 Style global dasar */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden; /* mencegah scroll horizontal global */
 }
 
-/* 🧪 Custom theme dengan Tailwind @layer jika mau extend */
+/* 🧱 Heading style dasar */
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold text-gray-900;
   }
 }
 
+/* 🧩 Komponen reusable */
 @layer components {
   .btn-primary {
     @apply bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition;
   }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 py-2 px-4 rounded hover:bg-gray-300 transition;
+  }
+
+  .input-field {
+    @apply w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
 }
 
+/* 🧰 Utilities tambahan */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Hilangkan scrollbar di kategori tapi tetap bisa digeser */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE & Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Smooth scroll behavior untuk seluruh aplikasi */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  /* Animasi transisi halus */
+  .transition-all {
+    transition: all 0.3s ease;
+  }
+
+  /* Shadow lembut */
+  .shadow-soft {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* 🔹 Penyesuaian kategori scroll */
+#category-scroll {
+  scroll-behavior: smooth;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }

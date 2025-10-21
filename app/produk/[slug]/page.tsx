@@ -110,66 +110,83 @@ export default function ProdukDetailPage() {
   const totalPrice = basePrice * area * quantity + variantTotal;
 
   /** 🧾 Kirim pesanan */
-  const handleOrderSubmit = async (directBuy: boolean) => {
-    if (!product) return;
-    if (noteError || designError) return;
+  /** 🧾 Kirim pesanan ke backend Laravel */
+const handleOrderSubmit = async (directBuy: boolean) => {
+  if (!product) return;
+  if (noteError || designError) return;
 
-    // 🔐 Kalau belum login, arahkan ke halaman login
-    const token = localStorage.getItem("auth_token");
-    if (!token) {
-      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
-      return;
+  const token = localStorage.getItem("auth_token");
+  if (!token) {
+    router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
+    return;
+  }
+
+  setSubmitting(true);
+  setErrorMessage(null);
+  setSuccessMessage(null);
+
+  try {
+    // 📦 Siapkan form data
+    const formData = new FormData();
+    formData.append("product_id", String(product.id));
+    formData.append("quantity", String(quantity));
+    formData.append("length", String(length));
+    formData.append("width", String(width));
+    formData.append("variants", JSON.stringify(selectedVariants));
+    formData.append("order_note", orderNote);
+    if (designFile) formData.append("design_file", designFile);
+
+    console.log("📤 Mengirim data:", Object.fromEntries(formData.entries()));
+
+    // ⚡ Kirim request ke backend
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/marketplace/orders`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+      // 👇 WAJIB supaya Laravel tahu ini request dari frontend stateful
+      credentials: "include",
+      mode: "cors",
+    });
+
+    console.log("📡 Status Response:", response.status);
+
+    // 🔥 Cek apakah gagal
+    if (!response.ok) {
+      const text = await response.text();
+      console.error("🚨 Response Error:", text);
+
+      let errorMsg = "Gagal mengirim pesanan ke server.";
+      try {
+        const json = JSON.parse(text);
+        errorMsg = json.message || Object.values(json.errors ?? {}).flat().join(", ");
+      } catch {}
+
+      throw new Error(errorMsg);
     }
 
-    setSubmitting(true);
-    setErrorMessage(null);
-    setSuccessMessage(null);
+    // ✅ Parsing hasil
+    const result = await response.json();
+    console.log("✅ Response JSON:", result);
 
-    try {
-      const formData = new FormData();
-      formData.append("product_id", String(product.id));
-      formData.append("quantity", String(quantity));
-      formData.append("length", String(length));
-      formData.append("width", String(width));
-      formData.append("variants", JSON.stringify(selectedVariants));
-      formData.append("order_note", orderNote);
-      if (designFile) formData.append("design_file", designFile);
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/marketplace/order`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        const text = await response.text();
-        console.error("🚨 Response Error:", text);
-        throw new Error("Gagal mengirim pesanan ke server.");
-      }
-
-      const result = await response.json();
-      console.log("📦 Order response:", result);
-
-      if (!result.success) {
-        throw new Error(result.message || "Gagal membuat pesanan.");
-      }
-
-      setSuccessMessage("✅ Pesanan berhasil dikirim!");
-      if (directBuy && result.data?.order?.id) {
-        router.push(`/checkout/${result.data.order.id}`);
-      }
-    } catch (err: any) {
-      console.error("🚨 Gagal kirim pesanan:", err);
-      setErrorMessage("Terjadi kesalahan saat mengirim pesanan.");
-    } finally {
-      setSubmitting(false);
+    if (!result.success) {
+      throw new Error(result.message || "Gagal membuat pesanan.");
     }
-  };
+
+    setSuccessMessage("✅ Pesanan berhasil dikirim!");
+    if (directBuy && result.data?.order?.id) {
+      router.push(`/checkout/${result.data.order.id}`);
+    }
+  } catch (err: any) {
+    console.error("🚨 Gagal kirim pesanan:", err);
+    setErrorMessage(err.message || "Terjadi kesalahan saat mengirim pesanan.");
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   // 🕐 Loading & Error
   if (loading)
