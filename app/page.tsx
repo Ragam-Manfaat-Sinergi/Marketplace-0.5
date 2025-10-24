@@ -5,6 +5,7 @@ import ProductSlider from "@/components/ProductSlider";
 import CategoryList from "@/components/CategoryList";
 import Link from "next/link";
 import { getProducts, Product } from "@/lib/api";
+import MobileNav from "@/components/MobileNav";
 
 /**
  * 🏠 Halaman Utama Marketplace
@@ -33,7 +34,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative pb-16">
       <div className="max-w-7xl mx-auto px-4 pt-6 pb-10 space-y-10">
         {/* 🖼️ SLIDER BANNER */}
         <section>
@@ -79,6 +80,9 @@ export default function HomePage() {
           )}
         </section>
       </div>
+
+      {/* 🚀 Menu bawah hanya tampil di mobile */}
+      <MobileNav />
     </div>
   );
 }
