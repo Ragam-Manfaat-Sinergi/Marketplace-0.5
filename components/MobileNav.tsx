@@ -9,7 +9,7 @@ export default function MobileNav() {
 
   const navItems = [
     { href: "/", label: "Home", icon: <FaHome /> },
-    { href: "/produk/tracking", label: "Pesanan", icon: <FaBoxOpen /> },
+    { href: "/order", label: "Pesanan", icon: <FaBoxOpen /> },
     { href: "/cart", label: "Keranjang", icon: <FaShoppingCart /> },
     { href: "/profil", label: "Profil", icon: <FaUser /> },
   ];

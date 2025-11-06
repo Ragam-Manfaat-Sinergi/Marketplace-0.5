@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* =======================================================
    🎨 WARNA UTAMA (TANPA DARK MODE)
@@ -9,16 +11,10 @@
   --heading-color: #000000; /* hitam pekat */
   --hover-blue: #3bb5ff; /* biru langit */
   --text-muted: #555555; /* abu lembut untuk teks kategori */
-}
 
-/* =======================================================
-   ⚙️ KONFIGURASI THEME INLINE TAILWIND
-   ======================================================= */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fonts */
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: "Courier New", monospace;
 }
 
 /* =======================================================
@@ -27,7 +23,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
@@ -60,15 +56,12 @@ body {
 /* =======================================================
    🧾 WARNA TEKS & JUDUL
    ======================================================= */
-
-/* 🖤 Judul utama (section title & heading) */
 h1, h2, h3,
 section h1, section h2, section h3 {
   color: var(--heading-color);
   font-weight: 700;
 }
 
-/* ✍️ Teks umum */
 h4, h5, h6,
 p, span, label, li, div, input, textarea, select, button {
   color: var(--foreground);
@@ -77,8 +70,6 @@ p, span, label, li, div, input, textarea, select, button {
 /* =======================================================
    💫 INTERAKTIF HOVER & LINK
    ======================================================= */
-
-/* Tautan umum */
 a {
   color: var(--foreground);
   transition: color 0.2s ease;
@@ -87,7 +78,6 @@ a:hover {
   color: var(--hover-blue);
 }
 
-/* Tombol umum */
 button {
   transition: all 0.2s ease;
 }
@@ -99,19 +89,14 @@ button:hover {
 /* =======================================================
    🧭 KATEGORI HOVER EFFECT
    ======================================================= */
-
-/* Warna teks nama kategori */
 .category-name {
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
-
-/* Saat hover: warna biru */
 .category-name:hover {
   color: var(--hover-blue);
 }
 
-/* Efek scale lembut pada ikon kategori saat hover */
 .category-card {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }

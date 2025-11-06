@@ -1,0 +1,326 @@
+{
+  "500": {
+    "defaultMessage": "500+",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "app_name": {
+    "defaultMessage": "Marketplace Design Studio",
+    "description": "Name of the Canva integration app."
+  },
+  "app_description": {
+    "defaultMessage": "Design, customize, and upload your product artwork directly using Canva.",
+    "description": "App description in Canva."
+  },
+  "_memuat_pesanan_kamu": {
+    "defaultMessage": "⏳ Memuat pesanan kamu...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_if_error_return": {
+    "defaultMessage": ");\r\n\r\n  if (error)\r\n    return",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_belum_ada_pesanan": {
+    "defaultMessage": "🛒 Belum ada pesanan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "pesananmu_akan_tampil_di_sini_setelah_kamu_membuat": {
+    "defaultMessage": "Pesananmu akan tampil di sini setelah kamu membuat order.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_return_": {
+    "defaultMessage": ");\r\n\r\n  return (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_keranjang__pesanan_saya": {
+    "defaultMessage": "🛍️ Keranjang & Pesanan Saya",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "item_pesanan": {
+    "defaultMessage": "Item Pesanan:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_lacak_pesanan": {
+    "defaultMessage": "🚚 Lacak Pesanan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_lanjutkan_pembayaran": {
+    "defaultMessage": "💳 Lanjutkan Pembayaran",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_memuat_data_checkout": {
+    "defaultMessage": "⏳ Memuat data checkout...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_if_order_return": {
+    "defaultMessage": ";\r\n  if (!order) return",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_order_tidak_ditemukan": {
+    "defaultMessage": "❌ Order tidak ditemukan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "checkout_pesanan": {
+    "defaultMessage": "Checkout Pesanan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "status": {
+    "defaultMessage": "Status:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "total": {
+    "defaultMessage": "Total:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "bayar_sekarang": {
+    "defaultMessage": "Bayar Sekarang",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "___jika_error_if_error_return_": {
+    "defaultMessage": ");\r\n\r\n  // ❌ Jika error\r\n  if (error)\r\n    return (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "___jika_order_tidak_ditemukan_if_order_return_": {
+    "defaultMessage": ");\r\n\r\n  // ❌ Jika order tidak ditemukan\r\n  if (!order)\r\n    return (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_pesanan_tidak_ditemukan": {
+    "defaultMessage": "❌ Pesanan tidak ditemukan.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "rekening_pembayaran": {
+    "defaultMessage": "Rekening Pembayaran:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_bank_bca": {
+    "defaultMessage": "🏦 Bank BCA",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "no_rekening": {
+    "defaultMessage": "No. Rekening:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "atas_nama": {
+    "defaultMessage": "Atas Nama:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "cv_sidomulyo_printing": {
+    "defaultMessage": "CV. Sidomulyo Printing",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "setelah_melakukan_transfer_silakan_upload_bukti_pe": {
+    "defaultMessage": "Setelah melakukan transfer, silakan upload bukti pembayaran di bawah.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "upload_bukti_transfer": {
+    "defaultMessage": "Upload Bukti Transfer:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "__": {
+    "defaultMessage": ") : (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_bukti_pembayaran_sudah_dikirim_atau_diverifikasi": {
+    "defaultMessage": "✅ Bukti pembayaran sudah dikirim atau diverifikasi.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_bukti_yang_diupload": {
+    "defaultMessage": "📎 Bukti yang diupload:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "lihat_bukti": {
+    "defaultMessage": "Lihat Bukti",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "pathnamestartswithpath_return_": {
+    "defaultMessage": "pathname.startsWith(path));\r\n\r\n  return (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_memuat_kategori": {
+    "defaultMessage": "⏳ Memuat kategori...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_kembali_ke_beranda": {
+    "defaultMessage": "← Kembali ke beranda",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "___": {
+    "defaultMessage": "))\r\n        ) : (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "belum_ada_produk_di_kategori_ini": {
+    "defaultMessage": "Belum ada produk di kategori ini.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "memuat": {
+    "defaultMessage": "Memuat...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "printing_no_1_di_indonesia": {
+    "defaultMessage": "PRINTING NO 1 DI INDONESIA",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "wwwsidomulyoprojectcom": {
+    "defaultMessage": "www.sidomulyoproject.com",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "selamat_datang": {
+    "defaultMessage": "Selamat Datang",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "silakan_masuk_ke_akun_anda": {
+    "defaultMessage": "Silakan masuk ke akun Anda",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "daftar_sekarang": {
+    "defaultMessage": "Daftar Sekarang",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "syarat__ketentuan": {
+    "defaultMessage": "Syarat & Ketentuan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "kebijakan_privasi_sidomulyo_project": {
+    "defaultMessage": "Kebijakan Privasi Sidomulyo Project",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_memuat_data": {
+    "defaultMessage": "⏳ Memuat data...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_if_order_return_": {
+    "defaultMessage": ");\r\n\r\n  if (!order)\r\n    return (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_tracking_pesanan": {
+    "defaultMessage": "📦 Tracking Pesanan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "0__": {
+    "defaultMessage": "0 && (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "estimasi_selesai_dalam": {
+    "defaultMessage": "Estimasi selesai dalam:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_rincian_pesanan": {
+    "defaultMessage": "🧾 Rincian Pesanan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_item_pesanan": {
+    "defaultMessage": "📦 Item Pesanan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_bagikan_link_tracking_via_whatsapp": {
+    "defaultMessage": "💬 Bagikan Link Tracking via WhatsApp",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "kategori_pilihan": {
+    "defaultMessage": "Kategori Pilihan",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "produk_terbaru": {
+    "defaultMessage": "Produk Terbaru",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "lihat_semua_": {
+    "defaultMessage": "Lihat Semua →",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_memuat_produk": {
+    "defaultMessage": "⏳ Memuat produk...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "belum_ada_produk_tersedia": {
+    "defaultMessage": "Belum ada produk tersedia.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_semua_produk_marketplace": {
+    "defaultMessage": "🛍️ Semua Produk Marketplace",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "memuat_produk": {
+    "defaultMessage": "Memuat produk...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "belum_ada_produk": {
+    "defaultMessage": "Belum ada produk.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_memuat_detail_produk": {
+    "defaultMessage": "⏳ memuat detail produk...",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_if_product_return_": {
+    "defaultMessage": ");\r\n\r\n  if (!product)\r\n    return (",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_produk_tidak_ditemukan": {
+    "defaultMessage": "❌ produk tidak ditemukan.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_kembali_ke_daftar_produk": {
+    "defaultMessage": "← kembali ke daftar produk",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "harga_per_meter": {
+    "defaultMessage": "Harga per meter:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_5_277_rating__terjual": {
+    "defaultMessage": "⭐ 5 (277 rating) | Terjual",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "ukuran_meter": {
+    "defaultMessage": "Ukuran (meter)",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "pilih_tambahan_varian": {
+    "defaultMessage": "Pilih Tambahan Varian:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "upload_desain_opsional": {
+    "defaultMessage": "Upload Desain (opsional)",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "keterangan_pemesanan_opsional": {
+    "defaultMessage": "Keterangan Pemesanan (opsional)",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "atur_jumlah__pembelian": {
+    "defaultMessage": "Atur jumlah & pembelian",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "subtotal": {
+    "defaultMessage": "Subtotal:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "kondisi": {
+    "defaultMessage": "Kondisi:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "baru": {
+    "defaultMessage": "Baru",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "min_pemesanan": {
+    "defaultMessage": "Min. Pemesanan:",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "1_buah": {
+    "defaultMessage": "1 Buah",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "informasi_penting_terkait_pengiriman_garansi_atau_": {
+    "defaultMessage": "informasi penting terkait pengiriman, garansi, atau kebijakan toko\r\n                  akan ditampilkan di sini.",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "_kembali_ke_produk": {
+    "defaultMessage": "← kembali ke produk",
+    "description": "Auto-detected UI text from Next.js components."
+  },
+  "daftar_akun_marketplace": {
+    "defaultMessage": "Daftar Akun Marketplace",
+    "description": "Auto-detected UI text from Next.js components."
+  }
+}

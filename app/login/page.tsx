@@ -1,16 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<p className="text-center text-gray-500 mt-10">Memuat...</p>}>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
 
-  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -19,7 +27,7 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
 
-    if (!emailOrPhone || !password) {
+    if (!login || !password) {
       setError("Semua kolom wajib diisi.");
       return;
     }
@@ -27,29 +35,49 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api/marketplace";
+
+      const response = await fetch(`${apiUrl}/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
-          email_or_phone: emailOrPhone,
+          login,
           password,
         }),
       });
 
-      const result = await response.json();
+      let result;
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error("Server tidak merespons dalam format JSON.");
+      }
 
-      if (!response.ok || !result.success) {
+      if (!response.ok) {
         throw new Error(result.message || "Login gagal, periksa kembali data Anda.");
       }
 
       // ✅ Simpan token dan user
       localStorage.setItem("auth_token", result.token);
-      localStorage.setItem("auth_user", JSON.stringify(result.data));
+      localStorage.setItem("auth_user", JSON.stringify(result.user));
 
-      // Redirect
-      router.push(redirect);
+      // ✅ Normalisasi role untuk pemeriksaan
+      const role = result.user?.role?.toLowerCase() || "";
+
+      // ✅ Arahkan sesuai role
+      if (role === "reseller") {
+        router.push("/reseller/dashboard");
+      } else if (role === "super admin") {
+        router.push("/admin");
+      } else {
+        router.push(redirect || "/dashboard");
+      }
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Terjadi kesalahan saat login.");
     } finally {
       setLoading(false);
     }
@@ -67,7 +95,9 @@ export default function LoginPage() {
           priority
         />
         <h2 className="text-white text-2xl font-bold mt-4">MARKETPLACE</h2>
-        <h3 className="text-white text-xl font-semibold">PRINTING NO 1 DI INDONESIA</h3>
+        <h3 className="text-white text-xl font-semibold">
+          PRINTING NO 1 DI INDONESIA
+        </h3>
         <p className="text-white mt-2 text-sm">www.sidomulyoproject.com</p>
       </div>
 
@@ -76,13 +106,22 @@ export default function LoginPage() {
         <div className="w-full max-w-sm bg-white/80 md:bg-[#5EC7FF]/40 rounded-2xl p-6 md:p-8 shadow-lg">
           {/* Logo */}
           <div className="flex justify-center mb-6">
-            <Image src="/logo-sidomulyo.png" alt="Logo Sidomulyo" width={160} height={50} />
+            <Image
+              src="/logo-sidomulyo.png"
+              alt="Logo Sidomulyo"
+              width={160}
+              height={50}
+            />
           </div>
 
           {/* Title khusus mobile */}
           <div className="text-center mb-5 md:hidden">
-            <h2 className="text-lg font-semibold text-gray-800">Selamat Datang</h2>
-            <p className="text-sm text-gray-600">Silakan masuk ke akun Anda</p>
+            <h2 className="text-lg font-semibold text-gray-800">
+              Selamat Datang
+            </h2>
+            <p className="text-sm text-gray-600">
+              Silakan masuk ke akun Anda
+            </p>
           </div>
 
           {/* Form Login */}
@@ -90,8 +129,8 @@ export default function LoginPage() {
             <input
               type="text"
               placeholder="Masukkan email / nomor handphone"
-              value={emailOrPhone}
-              onChange={(e) => setEmailOrPhone(e.target.value)}
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <input
@@ -115,21 +154,28 @@ export default function LoginPage() {
 
           {/* 🔹 Social Login */}
           <div className="flex justify-center mt-5 space-x-4">
-            <button className="p-2 bg-white rounded-full shadow-md hover:scale-105 transition">
-              <Image src="/icons/tiktok.svg" alt="TikTok" width={24} height={24} />
-            </button>
-            <button className="p-2 bg-white rounded-full shadow-md hover:scale-105 transition">
-              <Image src="/icons/facebook.svg" alt="Facebook" width={24} height={24} />
-            </button>
-            <button className="p-2 bg-white rounded-full shadow-md hover:scale-105 transition">
-              <Image src="/icons/google.svg" alt="Google" width={24} height={24} />
-            </button>
+            {["tiktok", "facebook", "google"].map((icon) => (
+              <button
+                key={icon}
+                className="p-2 bg-white rounded-full shadow-md hover:scale-105 transition"
+              >
+                <Image
+                  src={`/icons/${icon}.svg`}
+                  alt={icon}
+                  width={24}
+                  height={24}
+                />
+              </button>
+            ))}
           </div>
 
           {/* 🔹 Register Link */}
           <div className="text-center mt-6 text-sm text-gray-800">
             Belum punya akun?{" "}
-            <Link href="/register" className="text-blue-700 font-semibold hover:underline">
+            <Link
+              href="/register"
+              className="text-blue-700 font-semibold hover:underline"
+            >
               Daftar Sekarang
             </Link>
             <p className="text-gray-600 text-xs mt-3 md:block hidden">

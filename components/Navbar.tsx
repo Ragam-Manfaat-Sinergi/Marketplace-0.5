@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 interface User {
   id: number;
@@ -14,44 +15,77 @@ interface User {
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
+
+  // ✅ Jangan tampilkan Navbar di halaman login / register
+  const hideNavbarPaths = ["/login", "/register"];
+  const shouldHideNavbar = hideNavbarPaths.some((path) =>
+    pathname.startsWith(path)
+  );
 
   useEffect(() => {
+    // Ambil token & user dari localStorage
     const token = localStorage.getItem("auth_token");
+    const cachedUser = localStorage.getItem("auth_user");
+
+    // Jika sudah ada user tersimpan, langsung tampilkan dulu (biar cepat)
+    if (cachedUser) {
+      try {
+        setUser(JSON.parse(cachedUser));
+      } catch {
+        localStorage.removeItem("auth_user");
+      }
+    }
+
+    // Kalau tidak ada token, berarti belum login
     if (!token) {
       setUser(null);
       setLoading(false);
       return;
     }
 
+    // 🔹 Cek validitas token ke backend
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/marketplace/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/json",
+            },
+          }
+        );
+
         const result = await res.json();
-        if (result.success && result.data) {
-          setUser(result.data);
+
+        // 🔹 Pastikan format sesuai Laravel AuthController
+        if ((res.ok && result.data) || result.success) {
+          const userData = result.data || result.user;
+          setUser(userData);
+          localStorage.setItem("auth_user", JSON.stringify(userData));
         } else {
+          console.warn("Token tidak valid / user tidak ditemukan");
           setUser(null);
+          localStorage.removeItem("auth_user");
         }
       } catch (err) {
-        console.error("Gagal memuat user:", err);
+        console.error("❌ Gagal memuat user:", err);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
+
     fetchUser();
   }, []);
 
   const handleLogout = async () => {
     const token = localStorage.getItem("auth_token");
+
     if (token) {
       try {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/marketplace/logout`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,13 +93,21 @@ export default function Navbar() {
           },
         });
       } catch {
-        // abaikan error logout backend
+        // Abaikan error logout
       }
     }
+
+    // Hapus data user dari localStorage
     localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_user");
     setUser(null);
+
+    // Refresh ke halaman utama
     window.location.href = "/";
   };
+
+  // 🧩 Jangan render Navbar di halaman login/register
+  if (shouldHideNavbar) return null;
 
   if (loading) {
     return (
@@ -134,8 +176,9 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* 🔹 Right Icons */}
+          {/* 🔹 Right Section */}
           {!user ? (
+            // 👤 Jika belum login
             <div className="flex items-center gap-3">
               <Link
                 href="/login"
@@ -151,26 +194,38 @@ export default function Navbar() {
               </Link>
             </div>
           ) : (
+            // 🔒 Jika sudah login
             <div className="flex items-center gap-6">
-              <Link href="/keranjang" className="relative hover:scale-110 transition">
-                <Image src="/icons/keranjang.svg" alt="Keranjang" width={22} height={22} />
+              <Link href="/cart" className="relative hover:scale-110 transition">
+                <Image
+                  src="/icons/keranjang.svg"
+                  alt="cart"
+                  width={22}
+                  height={22}
+                />
                 <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] rounded-full px-1">
                   1
                 </span>
               </Link>
 
               <Link href="/notifikasi" className="hover:scale-110 transition">
-                <Image src="/icons/notifikasi.svg" alt="Notifikasi" width={22} height={22} />
+                <Image
+                  src="/icons/notifikasi.svg"
+                  alt="Notifikasi"
+                  width={22}
+                  height={22}
+                />
               </Link>
 
               <Link href="/chat" className="hover:scale-110 transition">
                 <Image src="/icons/chat.svg" alt="Chat" width={22} height={22} />
               </Link>
 
-              <Link href="/desain" className="hover:scale-110 transition">
-                <Image src="/icons/desain.svg" alt="Desain" width={22} height={22} />
+              <Link href="/design" className="hover:scale-110 transition">
+                <Image src="/icons/desain.svg" alt="design" width={22} height={22} />
               </Link>
 
+              {/* 🔸 Profil dropdown */}
               <div className="relative group">
                 <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer hover:scale-105 transition">
                   <span className="text-sm font-semibold text-gray-700">
@@ -180,10 +235,16 @@ export default function Navbar() {
 
                 <div className="absolute right-0 mt-2 w-44 bg-white border rounded-md shadow-lg hidden group-hover:block">
                   <p className="px-4 py-2 text-sm text-gray-600 border-b">{user.name}</p>
-                  <Link href="/profile" className="block px-4 py-2 text-sm hover:bg-gray-100">
+                  <Link
+                    href="/profile"
+                    className="block px-4 py-2 text-sm hover:bg-gray-100"
+                  >
                     Profil Saya
                   </Link>
-                  <Link href="/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-100">
+                  <Link
+                    href="/dashboard"
+                    className="block px-4 py-2 text-sm hover:bg-gray-100"
+                  >
                     Dashboard
                   </Link>
                   <button
@@ -206,6 +267,7 @@ export default function Navbar() {
         </Link>
 
         {!user ? (
+          // 👤 Belum login
           <div className="flex items-center gap-2">
             <Link
               href="/login"
@@ -221,9 +283,10 @@ export default function Navbar() {
             </Link>
           </div>
         ) : (
+          // 🔒 Sudah login
           <div className="flex items-center gap-4">
-            <Link href="/keranjang">
-              <Image src="/icons/keranjang.svg" alt="Keranjang" width={22} height={22} />
+            <Link href="/cart">
+              <Image src="/icons/keranjang.svg" alt="cart" width={22} height={22} />
             </Link>
             <Link href="/notifikasi">
               <Image src="/icons/notifikasi.svg" alt="Notifikasi" width={22} height={22} />
@@ -231,15 +294,14 @@ export default function Navbar() {
             <Link href="/chat">
               <Image src="/icons/chat.svg" alt="Chat" width={22} height={22} />
             </Link>
-            <div className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer">
-              <span className="text-xs font-semibold text-gray-700">
-                {user.name.charAt(0).toUpperCase()}
-              </span>
-            </div>
+            <Link href="/design">
+              <Image src="/icons/desain.svg" alt="design" width={22} height={22} />
+            </Link>
           </div>
         )}
       </div>
 
+      {/* Search bar mobile */}
       <div className="md:hidden px-4 pb-2 bg-white border-t border-gray-200">
         <div className="flex items-center border border-gray-300 rounded-lg bg-white px-3 py-1.5">
           <Image
